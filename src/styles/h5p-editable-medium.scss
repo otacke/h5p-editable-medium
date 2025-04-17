@@ -1,0 +1,98 @@
+.h5p-editable-medium {
+  --color-background: #fff;
+  --color-text: #4c4452;
+  --color-text-dark: var(--color-text);
+  --color-text-light: #fff;
+  --color-shadow-light: rgba(166, 166, 166, .2);
+
+ /* Primary color with common gradients */
+ --color-primary: rgb(26, 115, 217);
+ --color-primary-dark: rgb(23, 104, 196);
+ --color-primary-dark-80: rgb(23 104 196 / 80%);
+ --color-primary-5: rgb(26 115 217 / 5%);
+ --color-primary-10: rgb(26 115 217 / 10%);
+ --color-primary-15: rgb(26 115 217 / 15%);
+ --color-primary-20: rgb(26 115 217 / 20%);
+ --color-primary-25: rgb(26 115 217 / 15%);
+ --color-primary-30: rgb(26 115 217 / 30%);
+ --color-primary-50: rgb(26 115 217 / 50%);
+ --color-primary-70: rgb(26 115 217 / 70%);
+ --color-primary-90: rgb(26 115 217 / 90%);
+ --color-primary-95: rgb(26 115 217 / 95%);
+ --color-primary-5-opaque: #f3f8fd;
+ --color-primary-10-opaque:#e8f1fb;
+ --color-primary-25-opaque: #c6dcf5;
+
+ /* Icons */
+ --icon-fontawesome-edit: '\f044';
+
+  .h5p-editable-medium-main {
+    transition: width 0.25s;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+
+    .h5p-editable-medium-button {
+      transition: opacity 0.25s;
+
+      background-color: var(--color-primary-5-opaque);
+      border: 2px solid var(--color-text-light);
+      border-radius: 3px;
+      color: var(--color-primary);
+      height: 2.5rem;
+      padding: 0;
+      position: absolute;
+      right: 0.25rem;
+      top: 0.25rem;
+      width: 2.5rem;
+
+      &:hover {
+        background-color: var(--color-primary-10-opaque);
+      }
+
+      &:active {
+        background-color: var(--color-primary-25-opaque);
+      }
+
+      &::before {
+        content: var(--icon-fontawesome-edit);
+        font-family: "H5PFontAwesome4", sans-serif;
+        font-size: 1.5rem;
+      }
+    }
+
+    .h5p-editable-medium-options {
+      background-color: rgba(0, 0, 0, 0.5);
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      &.display-none {
+        display: none;
+      }
+    }
+  }
+
+  &:hover:has(.h5p-audio-controls):has(.h5p-editable-medium-button),
+  &:focus-within:has(.h5p-audio-controls):has(.h5p-editable-medium-button) {
+    .h5p-editable-medium-main {
+      width: calc(100% - 3rem);
+    }
+  }
+
+  &:not(:focus-within):not(:hover) {
+    .h5p-editable-medium-button {
+      opacity: 0;
+    }
+  }
+
+  &.h5p-standalone:has(.h5p-editable-medium-overlay-dialog.open) {
+    min-height: 20rem;
+  }
+
+  &.h5p-standalone .h5p-editable-medium-main:has(.h5p-image):has(.h5p-placeholder) {
+    height: 3rem;
+  }
+}

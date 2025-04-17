@@ -1,0 +1,253 @@
+[
+  {
+    "name": "contentType",
+    "type": "library",
+    "label": "Content type",
+    "importance": "high",
+    "options": [
+      "H5P.Audio 1.5",
+      "H5P.Image 1.1",
+      "H5P.Video 1.6"
+    ]
+  },
+  {
+    "name": "viewFieldsImage",
+    "type": "group",
+    "label": "Options",
+    "widget": "none",
+    "fields": [
+      {
+        "name": "sourceURL",
+        "type": "text",
+        "label": "Image source URL",
+        "description": "URL of the image to be displayed.",
+        "placeholder": "https://foo.bar/yada.png",
+        "optional": true,
+        "regexp": [
+          {
+            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+            "modifiers": "g",
+            "message": "The URL seems to be invalid."
+          },
+          {
+            "pattern": ".(gif|jpg|jpeg|png|webp|svg)(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+            "modifiers": "gi",
+            "message": "The URL does not seem to point to an image."
+          }
+        ]
+      },
+      {
+        "name": "sizingMode",
+        "type": "select",
+        "label": "Sizing mode",
+        "description": "Set how the image should be sized.",
+        "options": [
+          {
+            "value": "contain",
+            "label": "Contain"
+          },
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "stretch",
+            "label": "Stretch"
+          }
+        ],
+        "default": "contain",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "viewFieldsAudio",
+    "type": "group",
+    "label": "Options",
+    "widget": "none",
+    "fields": [
+      {
+        "name": "sourceURL",
+        "type": "text",
+        "label": "Audio source URL",
+        "description": "URL of the audio to be displayed in a player.",
+        "placeholder": "https://foo.bar/yada.mp3",
+        "optional": true,
+        "regexp": [
+          {
+            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+            "modifiers": "g",
+            "message": "The URL seems to be invalid."
+          },
+          {
+            "pattern": ".(mp3|ogg|oga|wav)(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+            "modifiers": "gi",
+            "message": "The URL does not seem to point to an audio file."
+          }
+        ]
+      },
+      {
+        "name": "playerMode",
+        "type": "select",
+        "label": "Player mode",
+        "description": "Set how the audio should be presented.",
+        "options": [
+          {
+            "value": "full",
+            "label": "Player"
+          },
+          {
+            "value": "minimalistic",
+            "label": "Button"
+          }
+        ],
+        "default": "full",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": "viewFieldsVideo",
+    "type": "group",
+    "label": "Options",
+    "widget": "none",
+    "fields": [
+      {
+        "name": "sourceURL",
+        "type": "text",
+        "label": "Video source URL",
+        "description": "URL of the audio to be displayed in a player.",
+        "placeholder": "https://foo.bar/yada.mp4",
+        "optional": true,
+        "regexp": [
+          {
+            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+            "modifiers": "g",
+            "message": "The URL seems to be invalid."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "behaviour",
+    "type": "group",
+    "importance": "low",
+    "label": "Behavioural settings",
+    "fields": [
+      {
+        "name": "userCanEdit",
+        "type": "boolean",
+        "label": "User can edit",
+        "default": true,
+        "widget": "none"
+      },
+      {
+        "name": "sizingMode",
+        "type": "select",
+        "label": "Sizing mode",
+        "options": [
+          {
+            "value": "contain",
+            "label": "Contain"
+          },
+          {
+            "value": "cover",
+            "label": "Cover"
+          },
+          {
+            "value": "stretch",
+            "label": "Stretch"
+          }
+        ],
+        "default": "contain",
+        "widget": "showWhen",
+        "showWhen": {
+          "rules": [
+            {
+              "field": "../contentType",
+              "equals": "H5P.Image 1.1"
+            }
+          ]
+        }
+      },
+      {
+        "name": "delegateEditorDialog",
+        "type": "boolean",
+        "label": "Delegate editor dialog",
+        "default": false,
+        "widget": "none"
+      }
+    ]
+  },
+  {
+    "name": "l10n",
+    "type": "group",
+    "label": "User interface",
+    "common": true,
+    "fields": [
+      {
+        "name": "save",
+        "type": "text",
+        "label": "Save",
+        "default": "Save"
+      },
+      {
+        "name": "cancel",
+        "type": "text",
+        "label": "Cancel",
+        "default": "Cancel"
+      },
+      {
+        "name": "invalidInput",
+        "type": "text",
+        "label": "Invalid input",
+        "default": "The field contains invalid input."
+      },
+      {
+        "name": "editImageSource",
+        "type": "text",
+        "label": "Edit image source URL",
+        "default": "Edit image source URL"
+      }
+    ]
+  },
+  {
+    "name": "a11y",
+    "type": "group",
+    "label": "Accessibility texts",
+    "common": true,
+    "fields": [
+      {
+        "name": "edit",
+        "type": "text",
+        "label": "Edit image source",
+        "default": "Edit image source"
+      },
+      {
+        "name": "close",
+        "type": "text",
+        "label": "Close",
+        "default": "Close"
+      },
+      {
+        "name": "image",
+        "type": "text",
+        "label": "Image",
+        "default": "Image"
+      },
+      {
+        "name": "audio",
+        "type": "text",
+        "label": "Audio",
+        "default": "Audio"
+      },
+      {
+        "name": "video",
+        "type": "text",
+        "label": "Video",
+        "default": "Video"
+      }
+    ]
+  }
+]

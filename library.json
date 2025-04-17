@@ -1,0 +1,42 @@
+{
+  "title": "Editable Medium",
+  "description": "Let users change the image, audio or video in the view.",
+  "majorVersion": 1,
+  "minorVersion": 0,
+  "patchVersion": 0,
+  "runnable": 1,
+  "author": "Oliver Tacke",
+  "license": "MIT",
+  "coreApi": {
+    "majorVersion": 1,
+    "minorVersion": 27
+  },
+  "machineName": "H5P.EditableMedium",
+  "embedTypes": [
+    "iframe"
+  ],
+  "preloadedJs": [
+    {
+      "path": "dist/h5p-editable-medium.js"
+    }
+  ],
+  "preloadedCss": [
+    {
+      "path": "dist/h5p-editable-medium.css"
+    }
+  ],
+  "preloadedDependencies": [
+    {
+      "machineName": "FontAwesome",
+      "majorVersion": 4,
+      "minorVersion": 5
+    }
+  ],
+  "editorDependencies": [
+    {
+      "machineName": "H5PEditor.ShowWhen",
+      "majorVersion": 1,
+      "minorVersion": 0
+    }
+  ]
+}
