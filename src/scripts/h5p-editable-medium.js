@@ -35,8 +35,6 @@ export default class EditableMedium extends H5P.EventDispatcher {
     });
     this.params = Util.extend(defaults, params);
 
-    this.getDescription();
-
     this.contentId = contentId;
     this.extras = extras;
 
