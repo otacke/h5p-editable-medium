@@ -1,5 +1,3 @@
-import semantics from '@root/semantics.json';
-
 import FocusTrap from '@services/focus-trap.js';
 import Util from '@services/util.js';
 import OptionFieldFactory from './option-field-factory.js';
@@ -75,11 +73,8 @@ export default class OverlayDialog {
       fallbackContainer: this.contentContainer
     });
 
-    this.viewFieldsName = `viewFields${this.params.machineName.replace('H5P.', '')}`;
-    this.fields = semantics.filter((field) => field.name === this.viewFieldsName)?.[0];
-    this.setTitle(this.fields?.label || '');
-
-    this.formFields = this.fields.fields
+    this.setTitle(this.params.fields?.label || '');
+    this.formFields = this.params.fields.fields
       .map((field) => OptionFieldFactory.produce(field, this.params.values[field.name], this.params.dictionary))
       .filter((field) => field !== undefined && field !== null);
 
@@ -138,7 +133,7 @@ export default class OverlayDialog {
       return field.getValue();
     });
 
-    this.callbacks.onSaved(this.viewFieldsName, values);
+    this.callbacks.onSaved(values);
   }
 
   /**

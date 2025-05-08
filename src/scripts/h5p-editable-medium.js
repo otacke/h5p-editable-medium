@@ -5,6 +5,7 @@ import Globals from '@services/globals.js';
 import Exercise from '@components/exercise/exercise.js';
 import OverlayDialog from '@components/overlay-dialog/overlay-dialog.js';
 import '@styles/h5p-editable-medium.scss';
+import semantics from '@root/semantics.json';
 
 /** @constant {string} Default description */
 const DEFAULT_DESCRIPTION = 'Editable Medium';
@@ -58,22 +59,19 @@ export default class EditableMedium extends H5P.EventDispatcher {
     this.dom.classList.add('h5p-editable-medium-main');
 
     const subContentMachineName = this.getSubcontentMachineName();
-    const viewFieldsName = `viewFields${subContentMachineName.replace('H5P.', '')}`;
+    this.viewFieldsName = `viewFields${subContentMachineName.replace('H5P.', '')}`;
 
     this.overlayDialog = new OverlayDialog(
       {
         globals: this.globals,
         dictionary: this.dictionary,
         machineName: subContentMachineName,
-        values: this.params[viewFieldsName]
+        fields: semantics.filter((field) => field.name === this.viewFieldsName)?.[0],
+        values: this.params[this.viewFieldsName]
       },
       {
-        onSaved: (viewFieldsName, params = []) => {
-          params.forEach((param) => {
-            this.params[viewFieldsName][param.name] = param.value;
-          });
-
-          this.updateExercise();
+        onSaved: (params = []) => {
+          this.updateParams(params);
         }
       }
     );
@@ -89,6 +87,14 @@ export default class EditableMedium extends H5P.EventDispatcher {
 
       this.dom.append(button);
     }
+  }
+
+  updateParams(params) {
+    params.forEach((param) => {
+      this.params[this.viewFieldsName][param.name] = param.value;
+    });
+
+    this.updateExercise();
   }
 
   /**
@@ -108,9 +114,29 @@ export default class EditableMedium extends H5P.EventDispatcher {
   }
 
   openEditorDialog(params = {}) {
-    this.overlayDialog.show({
-      activeElement: params.activeElement,
-    });
+    if ( typeof this.params.passEditorDialog !== 'function') {
+      this.overlayDialog.show({
+        activeElement: params.activeElement,
+      });
+
+      return;
+    }
+
+    this.params.passEditorDialog(
+      {
+        title: this.getTitle(),
+        fields: semantics.filter((field) => field.name === this.viewFieldsName)?.[0]?.fields,
+        values: this.params[this.viewFieldsName]
+      },
+      {
+        setValues: (newParams) => {
+          this.updateParams(newParams);
+          if (params.activeElement) {
+            params.activeElement.focus();
+          }
+        }
+      }
+    );
   }
 
   updateExercise() {
