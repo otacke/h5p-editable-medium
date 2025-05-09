@@ -39,6 +39,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
     this.contentId = contentId;
     this.extras = extras;
 
+    this.language = extras?.metadata?.language || extras?.metadata?.defaultLanguage || 'en';
+
     this.previousState = this.extras.previousState || {};
 
     if (this.previousState.viewFields) {
@@ -113,7 +115,9 @@ export default class EditableMedium extends H5P.EventDispatcher {
     });
   }
 
-  openEditorDialog(params = {}) {
+  async openEditorDialog(params = {}) {
+    this.translatedSemantics = this.translatedSemantics ?? await H5PUtil.getTranslatedSemantics(this.language);
+
     if ( typeof this.params.passEditorDialog !== 'function') {
       this.overlayDialog.show({
         activeElement: params.activeElement,
@@ -125,7 +129,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
     this.params.passEditorDialog(
       {
         title: this.getTitle(),
-        fields: semantics.filter((field) => field.name === this.viewFieldsName)?.[0]?.fields,
+        fields: this.translatedSemantics.filter((field) => field.name === this.viewFieldsName)?.[0]?.fields,
         values: this.params[this.viewFieldsName]
       },
       {
