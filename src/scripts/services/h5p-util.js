@@ -39,27 +39,44 @@ export default class H5PUtil {
   }
 
   /**
-   * Get loaded library version for an H5P machine name.
-   * @param {string} machineName Machine name of the library.
-   * @returns {string} Version of the library as major.minor or empty string if not found.
-   */
-  static getLibraryVersion(machineName) {
-    if (!machineName) {
-      return '';
-    }
-
-    const dirs = H5PIntegration?.libraryDirectories ?? {};
-    const matchedKey = Object.keys(dirs).find((key) => key.startsWith(machineName));
-
-    return matchedKey ? matchedKey.split('-').pop() : '';
-  }
-
-  /**
    * Get semantics.
+   * @param {string} [uberName] Uber name of the library.
    * @returns {object} Semantics.
    */
-  static getSemantics() {
-    return semantics;
+  static async getSemantics(uberName) {
+    if (typeof uberName === 'string') {
+      uberName = uberName.replace(/ /g, '-');
+    }
+    else {
+      uberName = undefined;
+    }
+
+    if (!uberName) {
+      return semantics;
+    }
+
+    const libraryPath = H5PUtil.getLibraryPath(uberName);
+
+    const semanticsPath = `${libraryPath}/semantics.json`;
+
+    try {
+      const response = await fetch(semanticsPath);
+      if (!response.ok) {
+        return;
+      }
+
+      return response.json();
+    }
+    catch (error) {
+      return;
+    }
+  }
+
+  static getLibraryPath(uberName) {
+    const libraryPath = H5P.getLibraryPath(uberName);
+
+    // Workaround for H5P CLI that may return wrong path when using H5P.getLibraryPath.
+    return libraryPath.replace(/(-\d+\.\d+)(\.\d+)?$/, '$1');
   }
 
   /**
@@ -103,20 +120,29 @@ export default class H5PUtil {
   /**
    * Get a translated version of semantics if available.
    * @param {string} languageCode Language code.
+   * @param {string} [uberName] Uber name of the library.
    * @returns {object} Translated semantics structure.
    */
-  static async getTranslatedSemantics(languageCode) {
-    if (!languageCode || languageCode === 'en') {
-      return semantics;
+  static async getTranslatedSemantics(languageCode, uberName) {
+    const semanticsJson = (uberName) ?
+      await H5PUtil.getSemantics(uberName) :
+      semantics;
+
+    if (!semanticsJson) {
+      return;
     }
 
-    const translation = await H5PUtil.getTranslation(languageCode);
+    if (!languageCode || languageCode === 'en') {
+      return semanticsJson;
+    }
+
+    const translation = await H5PUtil.getTranslation(languageCode, uberName);
 
     if (!translation?.semantics) {
-      return semantics;
+      return semanticsJson;
     }
 
-    return Util.mergeDeep(semantics, translation.semantics);
+    return Util.mergeDeep(semanticsJson, translation.semantics);
   }
 
   /**
@@ -139,17 +165,25 @@ export default class H5PUtil {
    * Get the Uber name of the library.
    * @returns {string} Uber name of the content type.
    */
-  static getUberName() {
+  static getUberNameNoSpaces() {
     return `${libraryJson.machineName}-${libraryJson.majorVersion}.${libraryJson.minorVersion}`;
   }
 
   /**
    * Get translation file contents for a given language code.
    * @param {string} [languageCode] Language code.
+   * @param {string} [uberName] Uber name of the library.
    * @returns {Promise<object>} Translation object or undefined if not found.
    */
-  static async getTranslation(languageCode = 'en') {
-    const libraryPath = H5P.getLibraryPath(H5PUtil.getUberName());
+  static async getTranslation(languageCode = 'en', uberName) {
+    if (typeof uberName === 'string') {
+      uberName = uberName.replace(/ /g, '-');
+    }
+    else {
+      uberName = undefined;
+    }
+
+    const libraryPath = H5PUtil.getLibraryPath(uberName ?? H5PUtil.getUberNameNoSpaces());
     const languagePath = `${libraryPath}/language/${languageCode}.json`;
 
     try {
@@ -164,5 +198,13 @@ export default class H5PUtil {
     catch (error) {
       return;
     }
+  }
+
+  /**
+   * Determine whether the H5P editor is being used.
+   * @returns {boolean} True if the H5P editor is being used, false otherwise.
+   */
+  static isEditor() {
+    return window.H5PEditor !== undefined;
   }
 }

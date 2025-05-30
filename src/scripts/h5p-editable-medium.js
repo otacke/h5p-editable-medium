@@ -6,6 +6,7 @@ import Exercise from '@components/exercise/exercise.js';
 import OverlayDialog from '@components/overlay-dialog/overlay-dialog.js';
 import '@styles/h5p-editable-medium.scss';
 import semantics from '@root/semantics.json';
+import { values } from 'regenerator-runtime';
 
 /** @constant {string} Default description */
 const DEFAULT_DESCRIPTION = 'Editable Medium';
@@ -19,6 +20,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
    */
   constructor(params, contentId, extras = {}) {
     super();
+
+    this.translatedSemantics = {};
 
     const defaults = Util.extend(H5PUtil.getSemanticsDefaults(), {
       contentType: {
@@ -35,6 +38,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
       viewFieldsVideo: {},
     });
     this.params = Util.extend(defaults, params);
+
+    this.callbacks = {};
 
     this.contentId = contentId;
     this.extras = extras;
@@ -72,8 +77,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
         values: this.params[this.viewFieldsName]
       },
       {
-        onSaved: (params = []) => {
-          this.updateParams(params);
+        onSaved: (params = [], isEditor) => {
+          this.updateParams(params, isEditor);
         }
       }
     );
@@ -91,10 +96,16 @@ export default class EditableMedium extends H5P.EventDispatcher {
     }
   }
 
-  updateParams(params) {
-    params.forEach((param) => {
-      this.params[this.viewFieldsName][param.name] = param.value;
-    });
+  updateParams(params, isEditor = false) {
+    if (isEditor) {
+      const paramsObject = Util.paramsArrayToPlainObject(params);
+      this.params = paramsObject;
+    }
+    else {
+      params.forEach((param) => {
+        this.params[this.viewFieldsName][param.name] = param.value;
+      });
+    }
 
     this.updateExercise();
   }
@@ -116,9 +127,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
   }
 
   async openEditorDialog(params = {}) {
-    this.translatedSemantics = this.translatedSemantics ?? await H5PUtil.getTranslatedSemantics(this.language);
-
-    if ( typeof this.params.passEditorDialog !== 'function') {
+    if (typeof this.callbacks.passEditorDialog !== 'function') {
       this.overlayDialog.show({
         activeElement: params.activeElement,
       });
@@ -126,15 +135,33 @@ export default class EditableMedium extends H5P.EventDispatcher {
       return;
     }
 
-    this.params.passEditorDialog(
+    this.translatedSemantics.EditableMedium =
+      this.translatedSemantics.EditableMedium ?? await H5PUtil.getTranslatedSemantics(this.language);
+
+    const uberNameNoSpaces = this.getSubcontentUberName().replace(/ /g, '-');
+
+    this.translatedSemantics[uberNameNoSpaces] =
+      this.translatedSemantics[uberNameNoSpaces] ??
+        await H5PUtil.getTranslatedSemantics(this.language, uberNameNoSpaces);
+
+    const fieldsToPass = this.translatedSemantics.EditableMedium
+      .filter((field) => field.name === this.viewFieldsName)?.[0]?.fields;
+    const valuesToPass = this.params[this.viewFieldsName];
+
+    const userParams = this.getCurrentState().main;
+    const mergedParams = { ...this.params, ...userParams };
+
+    this.callbacks.passEditorDialog(
       {
+        versionedName: this.libraryInfo.versionedName,
+        params: mergedParams,
         title: this.getTitle(),
-        fields: this.translatedSemantics.filter((field) => field.name === this.viewFieldsName)?.[0]?.fields,
-        values: this.params[this.viewFieldsName]
+        fields: fieldsToPass,
+        values: valuesToPass
       },
       {
-        setValues: (newParams) => {
-          this.updateParams(newParams);
+        setValues: (newParams, isEditor) => {
+          this.updateParams(newParams, isEditor);
           if (params.activeElement) {
             params.activeElement.focus();
           }
@@ -188,6 +215,13 @@ export default class EditableMedium extends H5P.EventDispatcher {
     return this.params.contentType.library.split(' ')?.[0] ?? '';
   }
 
+  getSubcontentUberName() {
+    return this.params.contentType.library ?? '';
+  }
+
+  setPassEditorDialogCallback(callback) {
+    this.callbacks.passEditorDialog = callback;
+  }
   /**
    * Get description.
    * @returns {string} Description.

@@ -1,4 +1,5 @@
 import Util from '@services/util.js';
+import H5PUtil from '@services/h5p-util.js';
 import './exercise.scss';
 
 export default class Exercise {
@@ -138,10 +139,12 @@ export default class Exercise {
       return; // Only once, please
     }
 
+    const contentId = H5PUtil.isEditor() ? H5PEditor.contentId : this.params.globals.get('contentId');
+
     if (!this.instance) {
       this.instance = H5P.newRunnable(
         this.params.contentType,
-        this.params.globals.get('contentId'),
+        contentId,
         undefined,
         true,
         { previousState: this.params.previousState?.instanceState }
