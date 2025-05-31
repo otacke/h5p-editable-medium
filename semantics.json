@@ -55,7 +55,6 @@
             "label": "Stretch"
           }
         ],
-        "default": "contain",
         "optional": true
       }
     ]
@@ -101,7 +100,6 @@
             "label": "Button"
           }
         ],
-        "default": "full",
         "optional": true
       }
     ]

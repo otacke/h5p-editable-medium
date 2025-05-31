@@ -29,9 +29,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
         params: {},
         subContentId: H5P.createUUID()
       },
-      viewFieldsImage: {
-        sizingMode: params?.behaviour?.sizingMode ?? 'contain',
-      },
+      viewFieldsImage: {},
       viewFieldsAudio: {
         playerMode: params?.contentType?.params?.playerMode ?? 'full'
       },
@@ -48,11 +46,21 @@ export default class EditableMedium extends H5P.EventDispatcher {
 
     this.previousState = this.extras.previousState || {};
 
+    // Sync author values/user values
     if (this.previousState.viewFields) {
       Object.keys(this.previousState.viewFields).forEach((type) => {
         const viewFieldsName = `viewFields${type}`;
         this.params[viewFieldsName] = this.previousState.viewFields[type];
       });
+    }
+    else {
+      const subContentMachineName = this.getSubcontentMachineName();
+      if (subContentMachineName === 'H5P.Image') {
+        this.params.viewFieldsImage.sizingMode = this.params.behaviour?.sizingMode;
+      }
+      if (subContentMachineName === 'H5P.Audio') {
+        this.params.viewFieldsAudio.playerMode = this.params.contentType?.params?.playerMode || 'full';
+      }
     }
 
     this.globals = new Globals();
@@ -100,6 +108,13 @@ export default class EditableMedium extends H5P.EventDispatcher {
     if (isEditor) {
       const paramsObject = Util.paramsArrayToPlainObject(params);
       this.params = paramsObject;
+
+      if (this.viewFieldsName === 'viewFieldsImage') {
+        this.params.viewFieldsImage.sizingMode = this.params.behaviour?.sizingMode;
+      }
+      else if (this.viewFieldsName === 'viewFieldsAudio') {
+        this.params.viewFieldsAudio.playerMode = this.params.contentType.params?.playerMode;
+      }
     }
     else {
       params.forEach((param) => {
