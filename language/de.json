@@ -1,0 +1,131 @@
+{
+  "semantics": [
+    {
+      "label": "Inhaltstyp"
+    },
+    {
+      "label": "Optionen",
+      "fields": [
+        {
+          "label": "Bild-Quell-URL",
+          "description": "URL des anzuzeigenden Bildes.",
+          "placeholder": "https://foo.bar/yada.png"
+        },
+        {
+          "label": "Größenmodus",
+          "description": "Legt fest, wie das Bild dimensioniert werden soll.",
+          "options": [
+            {
+              "label": "Enthalten"
+            },
+            {
+              "label": "Ausfüllen"
+            },
+            {
+              "label": "Strecken"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Optionen",
+      "fields": [
+        {
+          "label": "Audio-Quell-URL",
+          "description": "URL der im Player anzuzeigenden Audiodatei.",
+          "placeholder": "https://foo.bar/yada.mp3"
+        },
+        {
+          "label": "Player-Modus",
+          "description": "Legt fest, wie die Audiodatei präsentiert werden soll.",
+          "options": [
+            {
+              "label": "Player"
+            },
+            {
+              "label": "Button"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Optionen",
+      "fields": [
+        {
+          "label": "Video-Quell-URL",
+          "description": "URL des im Player anzuzeigenden Videos.",
+          "placeholder": "https://foo.bar/yada.mp4"
+        }
+      ]
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "fields": [
+        {
+          "label": "Bearbeitbar für alle"
+        },
+        {
+          "label": "Größenmodus",
+          "options": [
+            {
+              "label": "Enthalten"
+            },
+            {
+              "label": "Ausfüllen"
+            },
+            {
+              "label": "Strecken"
+            }
+          ]
+        },
+        {
+          "label": "Editor-Dialog delegieren"
+        }
+      ]
+    },
+    {
+      "label": "Bedienoberfläche",
+      "fields": [
+        {
+          "label": "Speichern",
+          "default": "Speichern"
+        },
+        {
+          "label": "Abbrechen",
+          "default": "Abbrechen"
+        },
+        {
+          "label": "Bild-Quell-URL bearbeiten",
+          "default": "Bild-Quell-URL bearbeiten"
+        }
+      ]
+    },
+    {
+      "label": "Texte für Barrierefreiheit",
+      "fields": [
+        {
+          "label": "Bildquelle bearbeiten",
+          "default": "Bildquelle bearbeiten"
+        },
+        {
+          "label": "Schließen",
+          "default": "Schließen"
+        },
+        {
+          "label": "Bild",
+          "default": "Bild"
+        },
+        {
+          "label": "Audio",
+          "default": "Audio"
+        },
+        {
+          "label": "Video",
+          "default": "Video"
+        }
+      ]
+    }
+  ]
+}

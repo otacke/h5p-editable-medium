@@ -197,12 +197,6 @@
         "default": "Cancel"
       },
       {
-        "name": "invalidInput",
-        "type": "text",
-        "label": "Invalid input",
-        "default": "The field contains invalid input."
-      },
-      {
         "name": "editImageSource",
         "type": "text",
         "label": "Edit image source URL",

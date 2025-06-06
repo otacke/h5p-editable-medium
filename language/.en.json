@@ -1,0 +1,131 @@
+{
+  "semantics": [
+    {
+      "label": "Content type"
+    },
+    {
+      "label": "Options",
+      "fields": [
+        {
+          "label": "Image source URL",
+          "description": "URL of the image to be displayed.",
+          "placeholder": "https://foo.bar/yada.png"
+        },
+        {
+          "label": "Sizing mode",
+          "description": "Set how the image should be sized.",
+          "options": [
+            {
+              "label": "Contain"
+            },
+            {
+              "label": "Cover"
+            },
+            {
+              "label": "Stretch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Options",
+      "fields": [
+        {
+          "label": "Audio source URL",
+          "description": "URL of the audio to be displayed in a player.",
+          "placeholder": "https://foo.bar/yada.mp3"
+        },
+        {
+          "label": "Player mode",
+          "description": "Set how the audio should be presented.",
+          "options": [
+            {
+              "label": "Player"
+            },
+            {
+              "label": "Button"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Options",
+      "fields": [
+        {
+          "label": "Video source URL",
+          "description": "URL of the audio to be displayed in a player.",
+          "placeholder": "https://foo.bar/yada.mp4"
+        }
+      ]
+    },
+    {
+      "label": "Behavioural settings",
+      "fields": [
+        {
+          "label": "User can edit"
+        },
+        {
+          "label": "Sizing mode",
+          "options": [
+            {
+              "label": "Contain"
+            },
+            {
+              "label": "Cover"
+            },
+            {
+              "label": "Stretch"
+            }
+          ]
+        },
+        {
+          "label": "Delegate editor dialog"
+        }
+      ]
+    },
+    {
+      "label": "User interface",
+      "fields": [
+        {
+          "label": "Save",
+          "default": "Save"
+        },
+        {
+          "label": "Cancel",
+          "default": "Cancel"
+        },
+        {
+          "label": "Edit image source URL",
+          "default": "Edit image source URL"
+        }
+      ]
+    },
+    {
+      "label": "Accessibility texts",
+      "fields": [
+        {
+          "label": "Edit image source",
+          "default": "Edit image source"
+        },
+        {
+          "label": "Close",
+          "default": "Close"
+        },
+        {
+          "label": "Image",
+          "default": "Image"
+        },
+        {
+          "label": "Audio",
+          "default": "Audio"
+        },
+        {
+          "label": "Video",
+          "default": "Video"
+        }
+      ]
+    }
+  ]
+}
