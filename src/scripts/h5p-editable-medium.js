@@ -4,12 +4,15 @@ import Dictionary from '@services/dictionary.js';
 import Globals from '@services/globals.js';
 import Exercise from '@components/exercise/exercise.js';
 import OverlayDialog from '@components/overlay-dialog/overlay-dialog.js';
+import QuestionTypeContract from '@mixins/question-type-contract.js';
 import '@styles/h5p-editable-medium.scss';
 import semantics from '@root/semantics.json';
-import { values } from 'regenerator-runtime';
 
 /** @constant {string} Default description */
 const DEFAULT_DESCRIPTION = 'Editable Medium';
+
+/** @constant {string} DEFAULT_LANGUAGE_TAG Default language tag used if not specified in metadata. */
+const DEFAULT_LANGUAGE_TAG = 'en';
 
 export default class EditableMedium extends H5P.EventDispatcher {
   /**
@@ -20,6 +23,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
    */
   constructor(params, contentId, extras = {}) {
     super();
+
+    Util.addMixins(EditableMedium, [QuestionTypeContract]);
 
     this.translatedSemantics = {};
 
@@ -37,12 +42,16 @@ export default class EditableMedium extends H5P.EventDispatcher {
     });
     this.params = Util.extend(defaults, params);
 
+    this.initialParams = Util.clone(this.params);
+
     this.callbacks = {};
 
     this.contentId = contentId;
     this.extras = extras;
 
-    this.language = extras?.metadata?.language || extras?.metadata?.defaultLanguage || 'en';
+    this.wasAnswerGiven = false;
+
+    this.language = extras?.metadata?.language || extras?.metadata?.defaultLanguage || DEFAULT_LANGUAGE_TAG;
 
     this.previousState = this.extras.previousState || {};
 
@@ -118,6 +127,10 @@ export default class EditableMedium extends H5P.EventDispatcher {
     }
     else {
       params.forEach((param) => {
+        if (!this.wasAnswerGiven) {
+          this.wasAnswerGiven = (this.params[this.viewFieldsName][param.name] ?? '') !== (param.value ?? '');
+        }
+
         this.params[this.viewFieldsName][param.name] = param.value;
       });
     }
@@ -244,19 +257,6 @@ export default class EditableMedium extends H5P.EventDispatcher {
   getDescription() {
     const type = this.getSubcontentMachineName().replace('H5P.', '');
     return type ? `${DEFAULT_DESCRIPTION} (${type})` : DEFAULT_DESCRIPTION;
-  }
-
-  getCurrentState() {
-    const type = this.getSubcontentMachineName().replace('H5P.', '');
-    const state = { exercise: this.exercise.getCurrentState() };
-    const viewFieldsName = `viewFields${type}`;
-
-    if (type) {
-      state.viewFields = {};
-      state.viewFields[type] = this.params[viewFieldsName];
-    }
-
-    return state;
   }
 
   /**

@@ -242,6 +242,12 @@ export default class Exercise {
     this.isAttached = true;
   }
 
+  setContentTypeParams(contentTypeParams) {
+    this.params.contentType = contentTypeParams;
+    console.log(this.params.contentType.params.file.path);
+
+  }
+
   /**
    * Reset.
    * @param {object} [params] Parameters.
