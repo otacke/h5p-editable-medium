@@ -176,7 +176,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
       .filter((field) => field.name === this.viewFieldsName)?.[0]?.fields;
     const valuesToPass = this.params[this.viewFieldsName];
 
-    const userParams = this.getCurrentState().main;
+    const userParams = this.getExerciseState().main;
     const mergedParams = { ...this.params, ...userParams };
 
     this.callbacks.passEditorDialog(
@@ -265,5 +265,18 @@ export default class EditableMedium extends H5P.EventDispatcher {
    */
   getSummary() {
     return this.exercise.getSummary();
+  }
+
+  getExerciseState() {
+    const type = this.getSubcontentMachineName().replace('H5P.', '');
+    const state = { exercise: this.exercise.getCurrentState() };
+    const viewFieldsName = `viewFields${type}`;
+
+    if (type) {
+      state.viewFields = {};
+      state.viewFields[type] = this.params[viewFieldsName];
+    }
+
+    return state;
   }
 }
