@@ -244,8 +244,6 @@ export default class Exercise {
 
   setContentTypeParams(contentTypeParams) {
     this.params.contentType = contentTypeParams;
-    console.log(this.params.contentType.params.file.path);
-
   }
 
   /**
