@@ -5,11 +5,9 @@ import Globals from '@services/globals.js';
 import Exercise from '@components/exercise/exercise.js';
 import OverlayDialog from '@components/overlay-dialog/overlay-dialog.js';
 import QuestionTypeContract from '@mixins/question-type-contract.js';
+import XAPI from '@mixins/xapi.js';
 import '@styles/h5p-editable-medium.scss';
 import semantics from '@root/semantics.json';
-
-/** @constant {string} Default description */
-const DEFAULT_DESCRIPTION = 'Editable Medium';
 
 /** @constant {string} DEFAULT_LANGUAGE_TAG Default language tag used if not specified in metadata. */
 const DEFAULT_LANGUAGE_TAG = 'en';
@@ -24,7 +22,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
   constructor(params, contentId, extras = {}) {
     super();
 
-    Util.addMixins(EditableMedium, [QuestionTypeContract]);
+    Util.addMixins(EditableMedium, [QuestionTypeContract, XAPI]);
 
     this.translatedSemantics = {};
 
@@ -52,6 +50,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
     this.wasAnswerGiven = false;
 
     this.language = extras?.metadata?.language || extras?.metadata?.defaultLanguage || DEFAULT_LANGUAGE_TAG;
+    this.languageTag = Util.formatLanguageCode(this.language);
 
     this.previousState = this.extras.previousState || {};
 
@@ -225,17 +224,6 @@ export default class EditableMedium extends H5P.EventDispatcher {
   }
 
   /**
-   * Get task title.
-   * @returns {string} Title.
-   */
-  getTitle() {
-    // H5P Core function: createTitle
-    return H5P.createTitle(
-      this.extras?.metadata?.title || this.getDescription(),
-    );
-  }
-
-  /**
    * Get machine name of subcontent.
    * @returns {string} Machine name or empty string.
    */
@@ -249,14 +237,6 @@ export default class EditableMedium extends H5P.EventDispatcher {
 
   setPassEditorDialogCallback(callback) {
     this.callbacks.passEditorDialog = callback;
-  }
-  /**
-   * Get description.
-   * @returns {string} Description.
-   */
-  getDescription() {
-    const type = this.getSubcontentMachineName().replace('H5P.', '');
-    return type ? `${DEFAULT_DESCRIPTION} (${type})` : DEFAULT_DESCRIPTION;
   }
 
   /**

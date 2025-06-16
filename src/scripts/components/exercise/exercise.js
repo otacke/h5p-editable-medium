@@ -296,4 +296,21 @@ export default class Exercise {
       return `${type}: ${summary}`;
     }
   }
+
+  getXAPIResponse() {
+    const machineName = this.params.contentType.library.split(' ')[0];
+
+    let response = '';
+    if (machineName === 'H5P.Image') {
+      response = this.params.viewFields.sourceURL || this.params.contentType?.params?.file?.path || '';
+    }
+    else if (machineName === 'H5P.Audio') {
+      response = this.params.viewFields.sourceURL || this.params.contentType?.params?.files?.[0]?.path || '';
+    }
+    else if (machineName === 'H5P.Video') {
+      response = this.params.viewFields.sourceURL || this.params.contentType?.params?.sources?.[0]?.path || '';
+    }
+
+    return response;
+  }
 }
