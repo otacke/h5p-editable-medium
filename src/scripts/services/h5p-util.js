@@ -72,6 +72,11 @@ export default class H5PUtil {
     }
   }
 
+  /**
+   * Get the library path for a given ubername.
+   * @param {string} uberName Ubername of the library.
+   * @returns {string} Library path.
+   */
   static getLibraryPath(uberName) {
     const libraryPath = H5P.getLibraryPath(uberName);
 

@@ -207,11 +207,18 @@ export default class Exercise {
     });
   }
 
+  /**
+   * Start bubbling down resize events from main instance.
+   */
   startBubbleDownResize() {
     const mainInstance = this.params.globals.get('mainInstance');
     mainInstance.on('resize', this.handleBubbleDownResize);
   }
 
+  /**
+   * Handle resize event from main instance.
+   * @param {Event} event Resize event.
+   */
   handleBubbleDownResize(event) {
     const mainInstance = this.params.globals.get('mainInstance');
 
@@ -224,6 +231,9 @@ export default class Exercise {
     }
   }
 
+  /**
+   * Stop bubbling down resize events.
+   */
   stopBubbleDownResize() {
     const mainInstance = this.params.globals.get('mainInstance');
     mainInstance.off('resize', this.handleBubbleDownResize);
@@ -242,6 +252,10 @@ export default class Exercise {
     this.isAttached = true;
   }
 
+  /**
+   * Set content type parameters.
+   * @param {object} contentTypeParams Parameters for content type.
+   */
   setContentTypeParams(contentTypeParams) {
     this.params.contentType = contentTypeParams;
   }
@@ -273,6 +287,10 @@ export default class Exercise {
     }
   }
 
+  /**
+   * Get a summary of the component.
+   * @returns {string} Summary of component.
+   */
   getSummary() {
     const machineName = this.params.contentType.library.split(' ')[0];
     const plainName = machineName.replace('H5P.', '').toLowerCase();
@@ -297,6 +315,10 @@ export default class Exercise {
     }
   }
 
+  /**
+   * Get the response for xAPI.
+   * @returns {string} Response for xAPI.
+   */
   getXAPIResponse() {
     const machineName = this.params.contentType.library.split(' ')[0];
 

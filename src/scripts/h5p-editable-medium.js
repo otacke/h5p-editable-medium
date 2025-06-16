@@ -112,6 +112,11 @@ export default class EditableMedium extends H5P.EventDispatcher {
     }
   }
 
+  /**
+   * Update parameters of the content type.
+   * @param {object[]} params Parameters to update.
+   * @param {boolean} [isEditor] Whether the parameters are being updated from the editor.
+   */
   updateParams(params, isEditor = false) {
     if (isEditor) {
       const paramsObject = Util.paramsArrayToPlainObject(params);
@@ -153,6 +158,11 @@ export default class EditableMedium extends H5P.EventDispatcher {
     });
   }
 
+  /**
+   * Open the editor dialog.
+   * @param {object} [params] Parameters for opening the editor dialog.
+   * @param {HTMLElement} [params.activeElement] Element to focus after the dialog is closed.
+   */
   async openEditorDialog(params = {}) {
     if (typeof this.callbacks.passEditorDialog !== 'function') {
       this.overlayDialog.show({
@@ -197,6 +207,9 @@ export default class EditableMedium extends H5P.EventDispatcher {
     );
   }
 
+  /**
+   * Update the exercise.
+   */
   updateExercise() {
     const viewFieldsName = `viewFields${this.getSubcontentMachineName().replace('H5P.', '')}`;
 
@@ -231,10 +244,18 @@ export default class EditableMedium extends H5P.EventDispatcher {
     return this.params.contentType.library.split(' ')?.[0] ?? '';
   }
 
+  /**
+   * Get Uber name of subcontent.
+   * @returns {string} Uber name or empty string.
+   */
   getSubcontentUberName() {
     return this.params.contentType.library ?? '';
   }
 
+  /**
+   * Set the callback for passing editor dialog.
+   * @param {function} callback The callback function for editor dialog.
+   */
   setPassEditorDialogCallback(callback) {
     this.callbacks.passEditorDialog = callback;
   }
@@ -247,6 +268,10 @@ export default class EditableMedium extends H5P.EventDispatcher {
     return this.exercise.getSummary();
   }
 
+  /**
+   * Get the state of the exercise.
+   * @returns {object} The state of the exercise.
+   */
   getExerciseState() {
     const type = this.getSubcontentMachineName().replace('H5P.', '');
     const state = { exercise: this.exercise.getCurrentState() };

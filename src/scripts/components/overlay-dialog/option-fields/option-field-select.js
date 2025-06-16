@@ -3,6 +3,12 @@ import './option-field-select.scss';
 
 export default class OptionFieldSelect extends OptionField {
 
+  /**
+   * @class
+   * @param {object} [field] Field definition.
+   * @param {*} [value] Value for the field.
+   * @param {object} [dictionary] Dictionary for translations.
+   */
   constructor(field = {}, value, dictionary) {
     super(field, value, dictionary);
 
@@ -35,6 +41,9 @@ export default class OptionFieldSelect extends OptionField {
     this.content = newDOM;
   }
 
+  /**
+   * Reset the field.
+   */
   reset() {
     if (this.field.defaultValue) {
       this.contentDOM.value = this.field.defaultValue;
@@ -49,6 +58,10 @@ export default class OptionFieldSelect extends OptionField {
     this.setError();
   }
 
+  /**
+   * Get the current value of the field.
+   * @returns {object} Object containing the name and value of the field.
+   */
   getValue() {
     return {
       name: this.field.name,
@@ -56,6 +69,10 @@ export default class OptionFieldSelect extends OptionField {
     };
   }
 
+  /**
+   * Determine whether the field is valid.
+   * @returns {boolean} True if the field is valid, false otherwise.
+   */
   isValid() {
     return this.field.options.some((option) => option.value === this.contentDOM.value);
   }

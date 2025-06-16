@@ -4,6 +4,12 @@ import './option-field-text.scss';
 
 export default class OptionFieldText extends OptionField {
 
+  /**
+   * @class
+   * @param {object} [field] Field definition.
+   * @param {*} [value] Value for the field.
+   * @param {object} [dictionary] Dictionary for translations.
+   */
   constructor(field = {}, value, dictionary) {
     super(field, value, dictionary);
 
@@ -54,6 +60,10 @@ export default class OptionFieldText extends OptionField {
     this.content = newDOM;
   }
 
+  /**
+   * Get the current value of the field.
+   * @returns {object} Object containing the name and value of the field.
+   */
   getValue() {
     return {
       name: this.field.name,
@@ -61,11 +71,18 @@ export default class OptionFieldText extends OptionField {
     };
   }
 
+  /**
+   * Reset the field.
+   */
   reset() {
     this.contentDOM.value = '';
     this.setError();
   }
 
+  /**
+   * Determine whether the field is valid.
+   * @returns {boolean} True if the field is valid, false otherwise.
+   */
   isValid() {
     const value = this.contentDOM.value.trim();
     if (value === '') {
@@ -85,6 +102,9 @@ export default class OptionFieldText extends OptionField {
     return true;
   }
 
+  /**
+   * Valdidate the field.
+   */
   validate() {
     if (this.isValid()) {
       this.setError();

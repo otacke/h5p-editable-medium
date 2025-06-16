@@ -157,6 +157,12 @@ export default class Util {
     });
   }
 
+  /**
+   * Deep merge two objects or arrays.
+   * @param {object|*[]} obj1 First object or array.
+   * @param {object|*[]} obj2 Second object or array.
+   * @returns {object|*[]} Merged object or array.
+   */
   static mergeDeep(obj1, obj2) {
     if (Array.isArray(obj1) && Array.isArray(obj2)) {
       const maxLength = Math.max(obj1.length, obj2.length);
@@ -187,12 +193,17 @@ export default class Util {
     return obj2 !== undefined ? obj2 : obj1;
   }
 
+  /**
+   * Convert an array of parameters to a plain object.
+   * @param {object[]} arr Array of parameters.
+   * @returns {object} Plain object with parameter names as keys and values as values.
+   */
   static paramsArrayToPlainObject(arr) {
     const result = {};
 
     arr.forEach((item) => {
       if (Array.isArray(item.value)) {
-        result[item.name] = paramsArrayToPlainObject(item.value);
+        result[item.name] = Util.paramsArrayToPlainObject(item.value);
       }
       else {
         result[item.name] = item.value;

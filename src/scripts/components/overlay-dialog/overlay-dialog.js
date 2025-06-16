@@ -113,10 +113,17 @@ export default class OverlayDialog {
     return this.dom;
   }
 
+  /**
+   * Handle error state changed.
+   * @param {boolean} hasError Whether there is an error.
+   */
   handleErrorStateChanged(hasError) {
     this.saveButton.disabled = hasError;
   }
 
+  /**
+   * Save the form parameters.
+   */
   save() {
     const isInputValid = this.formFields.every((field) => field.isValid());
     if (!isInputValid) {
@@ -175,6 +182,9 @@ export default class OverlayDialog {
     }
   }
 
+  /**
+   * Cancel the dialog.
+   */
   cancel() {
     this.hide();
     this.formFields.forEach((field) => {
