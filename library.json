@@ -2,7 +2,7 @@
   "title": "Editable Medium",
   "description": "Let users change the image, audio or video in the view.",
   "majorVersion": 1,
-  "minorVersion": 0,
+  "minorVersion": 1,
   "patchVersion": 0,
   "runnable": 1,
   "author": "Oliver Tacke",
