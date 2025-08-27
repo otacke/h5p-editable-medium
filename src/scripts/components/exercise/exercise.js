@@ -249,6 +249,13 @@ export default class Exercise {
 
     this.instance.attach(H5P.jQuery(this.dom));
 
+    // Workaround for HFP-4289 (see https://github.com/h5p/h5p-audio/pull/48)
+    if (this.instance?.libraryInfo.machineName === 'H5P.Audio') {
+      if (this.instance.audio && !!window.chrome && this.params.contentType.params.playerMode === 'full') {
+        this.instance.audio.style.height = '54px';
+      }
+    }
+
     this.isAttached = true;
   }
 
