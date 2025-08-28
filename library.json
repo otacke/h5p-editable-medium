@@ -3,7 +3,7 @@
   "description": "Let users change the image, audio or video in the view.",
   "majorVersion": 1,
   "minorVersion": 1,
-  "patchVersion": 1,
+  "patchVersion": 3,
   "runnable": 1,
   "author": "Oliver Tacke",
   "license": "MIT",
@@ -30,6 +30,21 @@
       "machineName": "FontAwesome",
       "majorVersion": 4,
       "minorVersion": 5
+    },
+    {
+      "machineName": "H5P.Audio",
+      "majorVersion": 1,
+      "minorVersion": 5
+    },
+    {
+      "machineName": "H5P.Image",
+      "majorVersion": 1,
+      "minorVersion": 1
+    },
+    {
+      "machineName": "H5P.Video",
+      "majorVersion": 1,
+      "minorVersion": 6
     }
   ],
   "editorDependencies": [
