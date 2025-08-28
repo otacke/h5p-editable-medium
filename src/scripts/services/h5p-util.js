@@ -151,7 +151,7 @@ export default class H5PUtil {
   }
 
   /**
-   * Get loaded library version for an H5P machine name.
+   * Get version for an H5P machine name.
    * @param {string} machineName Machine name of the library.
    * @returns {string} Version of the library as major.minor or empty string if not found.
    */
@@ -160,10 +160,9 @@ export default class H5PUtil {
       return '';
     }
 
-    const dirs = H5PIntegration?.libraryDirectories ?? {};
-    const matchedKey = Object.keys(dirs).find((key) => key.startsWith(machineName));
-
-    return matchedKey ? matchedKey.split('-').pop() : '';
+    // Not all H5P integrations provide H5PIntegration.libraryDirectories where the loaded version could be retrieved.
+    const dependencies = H5PUtil.getDependencies();
+    return dependencies.find((dep) => dep.startsWith(machineName))?.split(' ').pop() || '';
   }
 
   /**
@@ -172,6 +171,18 @@ export default class H5PUtil {
    */
   static getUberNameNoSpaces() {
     return `${libraryJson.machineName}-${libraryJson.majorVersion}.${libraryJson.minorVersion}`;
+  }
+
+  /**
+   * Get all dependencies for the library.
+   * @returns {object[]} List of dependency machine names.
+   */
+  static getDependencies() {
+    const dependencies = [
+      ...(libraryJson?.preloadedDependencies ?? []),
+      ...(libraryJson?.editorDependencies ?? [])
+    ];
+    return dependencies.map((dep) => `${dep.machineName} ${dep.majorVersion}.${dep.minorVersion}`);
   }
 
   /**
