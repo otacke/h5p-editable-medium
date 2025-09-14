@@ -35,7 +35,7 @@ export default class OverlayDialog {
     // Container for H5P content, can be CSS-transformed
     this.contentContainer = document.createElement('div');
     this.contentContainer.classList.add(
-      'h5p-editable-medium-overlay-dialog-content-container'
+      'h5p-editable-medium-overlay-dialog-content-container',
     );
     this.dom.append(this.contentContainer);
 
@@ -47,7 +47,7 @@ export default class OverlayDialog {
     this.buttonClose = document.createElement('button');
     this.buttonClose.classList.add('h5p-editable-medium-overlay-dialog-button-close');
     this.buttonClose.setAttribute(
-      'aria-label', this.params.dictionary.get('a11y.close')
+      'aria-label', this.params.dictionary.get('a11y.close'),
     );
     this.buttonClose.addEventListener('click', () => {
       this.cancel();
@@ -70,7 +70,7 @@ export default class OverlayDialog {
     this.focusTrap = new FocusTrap({
       trapElement: this.dom,
       closeElement: this.buttonClose,
-      fallbackContainer: this.contentContainer
+      fallbackContainer: this.contentContainer,
     });
 
     this.setTitle(this.params.fields?.label || '');

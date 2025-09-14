@@ -30,11 +30,11 @@ export default class EditableMedium extends H5P.EventDispatcher {
       contentType: {
         library: `H5P.Image ${H5PUtil.getLibraryVersion('H5P.Image')}`,
         params: {},
-        subContentId: H5P.createUUID()
+        subContentId: H5P.createUUID(),
       },
       viewFieldsImage: {},
       viewFieldsAudio: {
-        playerMode: params?.contentType?.params?.playerMode ?? 'full'
+        playerMode: params?.contentType?.params?.playerMode ?? 'full',
       },
       viewFieldsVideo: {},
     });
@@ -90,13 +90,13 @@ export default class EditableMedium extends H5P.EventDispatcher {
         dictionary: this.dictionary,
         machineName: subContentMachineName,
         fields: semantics.filter((field) => field.name === this.viewFieldsName)?.[0],
-        values: this.params[this.viewFieldsName]
+        values: this.params[this.viewFieldsName],
       },
       {
         onSaved: (params = [], isEditor) => {
           this.updateParams(params, isEditor);
-        }
-      }
+        },
+      },
     );
 
     this.updateExercise();
@@ -194,7 +194,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
         params: mergedParams,
         title: this.getTitle(),
         fields: fieldsToPass,
-        values: valuesToPass
+        values: valuesToPass,
       },
       {
         setValues: (newParams, isEditor) => {
@@ -202,8 +202,8 @@ export default class EditableMedium extends H5P.EventDispatcher {
           if (params.activeElement) {
             params.activeElement.focus();
           }
-        }
-      }
+        },
+      },
     );
   }
 

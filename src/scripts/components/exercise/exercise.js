@@ -35,7 +35,7 @@ export default class Exercise {
 
         this.params.contentType.params.file = {
           mime: `image/${extension}`,
-          path: this.params.viewFields.sourceURL
+          path: this.params.viewFields.sourceURL,
         };
         // Not setting size here, but we don't need it ourselves
       }
@@ -60,8 +60,8 @@ export default class Exercise {
           {
             copyright: { license: 'U' },
             mime: `audio/${extension}`,
-            path: this.params.viewFields.sourceURL
-          }
+            path: this.params.viewFields.sourceURL,
+          },
         ];
       }
     }
@@ -77,7 +77,7 @@ export default class Exercise {
             '(?:v\\/|embed\\/|watch\\/|(?:user\\/(?:\\S+)\\/)?watch(?:\\S+)v=))|' +
             '(?:youtu\\.be\\/|y2u\\.be\\/))' +
           '([A-Za-z0-9_-]{11})',
-          'i'
+          'i',
         );
         const regExpPanopto = /^[^\/]+:\/\/([^\/]+)\/Panopto\/.+\?id=(.+)$/i;
         const regExpVimeo = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/i;
@@ -106,8 +106,8 @@ export default class Exercise {
           {
             copyright: { license: 'U' },
             mime: `video/${extension}`,
-            path: this.params.viewFields.sourceURL
-          }
+            path: this.params.viewFields.sourceURL,
+          },
         ];
 
         const isVideoFormat = ['video/mp4', 'video/webm', 'video/ogg']
@@ -147,7 +147,7 @@ export default class Exercise {
         contentId,
         undefined,
         true,
-        { previousState: this.params.previousState?.instanceState }
+        { previousState: this.params.previousState?.instanceState },
       );
     }
 
@@ -163,7 +163,7 @@ export default class Exercise {
 
     // Resize parent when children resize
     this.bubbleUp(
-      this.instance, 'resize', this.params.globals.get('mainInstance')
+      this.instance, 'resize', this.params.globals.get('mainInstance'),
     );
 
 
@@ -176,7 +176,7 @@ export default class Exercise {
    */
   getCurrentState() {
     return {
-      instanceState: this.instance?.getCurrentState?.()
+      instanceState: this.instance?.getCurrentState?.(),
     };
   }
 
