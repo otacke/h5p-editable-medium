@@ -159,9 +159,9 @@ export default class Util {
 
   /**
    * Deep merge two objects or arrays.
-   * @param {object|*[]} obj1 First object or array.
-   * @param {object|*[]} obj2 Second object or array.
-   * @returns {object|*[]} Merged object or array.
+   * @param {object|unknown[]} obj1 First object or array.
+   * @param {object|unknown[]} obj2 Second object or array.
+   * @returns {object|unknown[]} Merged object or array.
    */
   static mergeDeep(obj1, obj2) {
     if (Array.isArray(obj1) && Array.isArray(obj2)) {

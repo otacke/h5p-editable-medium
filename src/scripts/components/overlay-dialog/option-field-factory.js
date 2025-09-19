@@ -5,9 +5,9 @@ import OptionFieldBoolean from './option-fields/option-field-boolean.js';
 export default class OptionsFieldFactory {
 
   /**
-   * Priduce an option field based on the given field definition and value.
+   * Produce an option field based on the given field definition and value.
    * @param {object} [field] Field definition.
-   * @param {*} [value] Value for the field.
+   * @param {string|number|object|object[]} [value] Value for the field.
    * @param {object} [dictionary] Dictionary for translations.
    * @returns {OptionFieldText|OptionFieldSelect|OptionFieldBoolean|null} The created option field or null.
    */
@@ -24,7 +24,7 @@ export default class OptionsFieldFactory {
    * Create an option field based on the type.
    * @param {string} type Type of the field.
    * @param {object} field Field definition.
-   * @param {*} value Value for the field.
+   * @param {string|number|object|object[]} value Value for the field.
    * @param {object} dictionary Dictionary for translations.
    * @returns {OptionFieldText|OptionFieldSelect|OptionFieldBoolean|null} The created option field or null.
    */

@@ -6,7 +6,7 @@ export default class OptionFieldSelect extends OptionField {
   /**
    * @class
    * @param {object} [field] Field definition.
-   * @param {*} [value] Value for the field.
+   * @param {string|number|object|object[]} [value] Value for the field.
    * @param {object} [dictionary] Dictionary for translations.
    */
   constructor(field = {}, value, dictionary) {

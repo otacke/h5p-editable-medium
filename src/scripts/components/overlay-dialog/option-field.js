@@ -4,7 +4,7 @@ export default class OptionField {
   /**
    * @class
    * @param {object} field Field definition.
-   * @param {*} value Value for the field.
+   * @param {string|number|object|object[]} value Value for the field.
    * @param {object} dictionary Dictionary for translations.
    */
   constructor(field, value, dictionary) {
@@ -52,7 +52,7 @@ export default class OptionField {
 
   /**
    * Get the value of the option field.
-   * @returns {*} Value of the option field.
+   * @returns {string|number|object|object[]|undefined} Value of the option field.
    */
   getValue() {
     return; // Must be implemented
