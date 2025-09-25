@@ -23,18 +23,11 @@
         "description": "URL of the image to be displayed.",
         "placeholder": "https://foo.bar/yada.png",
         "optional": true,
-        "regexp": [
-          {
-            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
-            "modifiers": "g",
-            "message": "The URL seems to be invalid."
-          },
-          {
-            "pattern": ".(gif|jpg|jpeg|png|webp|svg)(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
-            "modifiers": "gi",
-            "message": "The URL does not seem to point to an image."
-          }
-        ]
+        "regexp": {
+          "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?.*\\.(gif|jpg|jpeg|png|webp|svg)(\\?[\\S]*)?(#[\\S]*)?$",
+          "modifiers": "gi",
+          "message": "The URL seems to be invalid or does not point to an image."
+        }
       },
       {
         "name": "sizingMode",
@@ -72,18 +65,11 @@
         "description": "URL of the audio to be displayed in a player.",
         "placeholder": "https://foo.bar/yada.mp3",
         "optional": true,
-        "regexp": [
-          {
-            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
-            "modifiers": "g",
-            "message": "The URL seems to be invalid."
-          },
-          {
-            "pattern": ".(mp3|ogg|oga|wav)(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
-            "modifiers": "gi",
-            "message": "The URL does not seem to point to an audio file."
-          }
-        ]
+        "regexp": {
+          "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?.*\\.(gif|jpg|jpeg|png|webp|svg)(\\?[\\S]*)?(#[\\S]*)?$",
+          "modifiers": "gi",
+          "message": "The URL seems to be invalid or does not point to an image."
+        }
       },
       {
         "name": "playerMode",
@@ -117,13 +103,11 @@
         "description": "URL of the audio to be displayed in a player.",
         "placeholder": "https://foo.bar/yada.mp4",
         "optional": true,
-        "regexp": [
-          {
-            "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
-            "modifiers": "g",
-            "message": "The URL seems to be invalid."
-          }
-        ]
+        "regexp":           {
+          "pattern": "^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(:\\d{1,5})?(\\/[^\\s]*)?(\\?[\\S]*)?(#[\\S]*)?$",
+          "modifiers": "g",
+          "message": "The URL seems to be invalid."
+        }
       }
     ]
   },

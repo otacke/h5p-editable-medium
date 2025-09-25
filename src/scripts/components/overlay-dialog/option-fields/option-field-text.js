@@ -14,18 +14,9 @@ export default class OptionFieldText extends OptionField {
     super(field, value, dictionary);
 
     // Deviating from semantics spec to support multiple regexps
-    if (!Array.isArray(this.field.regexp)) {
-      if (typeof this.field.regexp === 'object' && this.field.regexp !== null) {
-        this.field.regexp = [this.field.regexp];
-      }
-      else {
-        this.field.regexp = [];
-      }
+    if (typeof this.field.regexp !== 'object' || this.field.regexp === null) {
+      this.field.regexp = {};
     }
-
-    this.field.regexp = this.field.regexp.filter((regexp) => {
-      return regexp.pattern;
-    });
 
     this.contentDOM = document.createElement('input');
     this.contentDOM.classList.add('h5p-editable-medium-overlay-dialog-option-field-text-input');
@@ -89,17 +80,12 @@ export default class OptionFieldText extends OptionField {
       return !!this.field.optional;
     }
 
-    const isMatchingAllPatterns = this.field.regexp.every((rule) => {
-      const regexp = new RegExp(rule.pattern, rule.modifiers ?? '');
-
-      return regexp.test(value);
-    });
-
-    if (!isMatchingAllPatterns) {
-      return false;
+    if (typeof this.field.regexp.pattern !== 'string') {
+      return true;
     }
 
-    return true;
+    const regexp = new RegExp(this.field.regexp.pattern, this.field.regexp.modifiers ?? '');
+    return regexp.test(value);
   }
 
   /**
@@ -114,13 +100,10 @@ export default class OptionFieldText extends OptionField {
     let message = '';
 
     const value = this.contentDOM.value.trim();
-    this.field.regexp.forEach((rule) => {
-      const regexp = new RegExp(rule.pattern, rule.modifiers ?? '');
-
-      if (!regexp.test(value)) {
-        message = [message, rule.message].join(' ');
-      }
-    });
+    const regexp = new RegExp(this.field.regexp.pattern, this.field.regexp.modifiers ?? '');
+    if (!regexp.test(value)) {
+      message = [message, this.field.regexp.message].join(' ');
+    }
 
     if (message) {
       this.setError(message);
