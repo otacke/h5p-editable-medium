@@ -1,6 +1,6 @@
 {
   "name": "h5p-editable-medium",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Let users change the image in the view.",
   "private": true,
   "scripts": {
