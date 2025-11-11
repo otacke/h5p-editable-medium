@@ -1,7 +1,6 @@
 import Util from '@services/util.js';
 import H5PUtil from '@services/h5p-util.js';
 import Dictionary from '@services/dictionary.js';
-import Globals from '@services/globals.js';
 import Exercise from '@components/exercise/exercise.js';
 import OverlayDialog from '@components/overlay-dialog/overlay-dialog.js';
 import QuestionTypeContract from '@mixins/question-type-contract.js';
@@ -71,7 +70,7 @@ export default class EditableMedium extends H5P.EventDispatcher {
       }
     }
 
-    this.globals = new Globals();
+    this.globals = new Map();
     this.globals.set('contentId', this.contentId);
     this.globals.set('mainInstance', this);
 
